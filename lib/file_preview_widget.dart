@@ -41,22 +41,7 @@ class FilePreviewWidgetState extends State<FilePreviewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      return SizedBox(
-        width: widget.width,
-        height: widget.height,
-        child: AndroidView(
-          viewType: _viewType,
-          creationParams: {
-            "width": widget.width,
-            "height": widget.height,
-            "path": widget.path,
-          },
-          onPlatformViewCreated: _registerChannel,
-          creationParamsCodec: const StandardMessageCodec(),
-        ),
-      );
-    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
       return SizedBox(
         width: widget.width,
         height: widget.height,
@@ -76,14 +61,14 @@ class FilePreviewWidgetState extends State<FilePreviewWidget> {
     }
   }
 
-  //注册cannel
+  // 注册 channel
   void _registerChannel(int id) {
     _channel = MethodChannel("${_viewType}_$id");
     _channel?.setMethodCallHandler(_platformCallHandler);
     widget.controller?.init(_channel);
   }
 
-  //监听原生view传值
+  // 监听原生 view 传值
   Future<dynamic> _platformCallHandler(MethodCall call) async {
     switch (call.method) {
       case "onShow":

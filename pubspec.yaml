@@ -1,11 +1,11 @@
 name: file_preview
 description: A plug-in that supports flutter preview files
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/gstory0404/file_preview
 
 environment:
-  sdk: ">=2.15.0 <3.0.0"
-  flutter: ">=2.5.0"
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
 
 dependencies:
   flutter:
