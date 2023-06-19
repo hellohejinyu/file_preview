@@ -62,8 +62,15 @@ public class FilePreview : NSObject,FlutterPlatformView{
         if(filePath.starts(with: "http")){
             let path2 = filePath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
             let url = NSURL(string: path2)
-            let request = NSMutableURLRequest(url: url! as URL)
-            self.webView.load(request as URLRequest as URLRequest)
+            let ext = url?.pathExtension?.lowercased()
+            if (ext == "pdf") {
+                if let data = try? Data(contentsOf: url! as URL) {
+                    self.webView.load(data, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: url! as URL)
+                }
+            } else {
+                let request = NSMutableURLRequest(url: url! as URL)
+                self.webView.load(request as URLRequest as URLRequest)
+            }
         }else{
             let url = NSURL.fileURL(withPath:filePath)
             let ext = url.pathExtension.lowercased();
